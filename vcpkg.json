@@ -1,0 +1,19 @@
+{
+  "dependencies": [
+    "gtest",
+    {
+      "name": "qtbase",
+      "features": [
+        "gui",
+        "widgets"
+      ]
+    },
+    "qtdeclarative",
+    {
+      "name": "qttools",
+      "features": [
+        "qml"
+      ]
+    }
+  ]
+}
