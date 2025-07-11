@@ -1,0 +1,7 @@
+
+
+steps:
+    - name: Install VCPKG
+      run:
+        cd ${HOME}/vcpkg && \
+        .\bootstrap-vcpkg.bat

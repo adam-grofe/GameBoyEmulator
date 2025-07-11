@@ -1,0 +1,7 @@
+
+steps:
+    - name: Download and VCPKG
+      run: >
+        cd $HOME && \
+        git clone https://github.com/microsoft/vcpkg.git
+        
