@@ -57,7 +57,7 @@ jobs:
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        vcpkgGitCommitId: '2024.07.12'
+        vcpkgGitCommitId: '0cf34c184ce990471435b5b9c92edcf7424930b1'
 
     - name: Install system dependencies (Ubuntu)
       if: runner.os == 'Linux'
