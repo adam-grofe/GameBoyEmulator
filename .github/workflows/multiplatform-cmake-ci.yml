@@ -12,6 +12,10 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
 
+    env:
+      # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+      BUILD_TYPE: Release
+
     strategy:
       # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
       fail-fast: false
@@ -49,6 +53,25 @@ jobs:
       with:
         path: ${{ github.workspace }}/GameBoyEmulator
 
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgGitCommitId: '2024.07.12'
+
+    - name: Install system dependencies (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install ninja-build
+        sudo apt-get install pkg-config
+        sudo apt-get install libxkbcommon-x11-dev libxcb-cursor-dev
+
+    - name: Install Ninja (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install ninja
+
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
@@ -64,7 +87,7 @@ jobs:
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        --preset vcpkg
+        --preset vcpkg-ci
         -S ${{ github.workspace }}/GameBoyEmulator
 
     - name: Build
@@ -75,4 +98,8 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       shell: bash
       run: |
-        ctest
+        if [ -f CTestTestfile.cmake ]; then
+          ctest --verbose
+        else
+          echo "No tests found to run"
+        fi
