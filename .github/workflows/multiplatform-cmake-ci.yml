@@ -53,11 +53,6 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
-    - uses: .github/workflows/templates/install-vcpkg-windows.yml
-      if: matrix.os == 'windows-latest'
-    - uses: ./.github/workflows/templates/install-vcpkg-linux.yml
-      if: matrix.os == 'ubuntu-latest'
     
     - name: Download and VCPKG
       run: >
