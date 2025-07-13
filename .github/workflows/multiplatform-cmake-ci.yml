@@ -61,14 +61,14 @@ jobs:
 
     - name: Install VCPKG
       if: matrix.os == 'windows-latest'
+      working-directory: ${{ github.workspace }}/vcpkg
       run: |
-        cd ${{ github.workspace }}/vcpkg && \
         .\bootstrap-vcpkg.bat
 
     - name: Install VCPKG
       if: matrix.os == 'ubuntu-latest'
+      working-directory: ${{ github.workspace }}/vcpkg
       run: |
-        cd ${{ github.workspace }}/vcpkg && \
         .\bootstrap-vcpkg.sh
 
     - name: Configure CMake
