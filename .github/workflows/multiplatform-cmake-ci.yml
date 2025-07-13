@@ -54,11 +54,27 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - uses: .github/workflows/templates/download-vcpkg.yml
     - uses: .github/workflows/templates/install-vcpkg-windows.yml
       if: matrix.os == 'windows-latest'
     - uses: ./.github/workflows/templates/install-vcpkg-linux.yml
       if: matrix.os == 'ubuntu-latest'
+    
+    - name: Download and VCPKG
+      run: >
+        cd $HOME && \
+        git clone https://github.com/microsoft/vcpkg.git
+
+    - name: Install VCPKG
+      if: matrix.os == 'windows-latest'
+      run:
+        cd ${HOME}/vcpkg && \
+        .\bootstrap-vcpkg.bat
+
+    - name: Install VCPKG
+      if: matrix.os == 'ubuntu-latest'
+      run:
+        cd ${HOME}/vcpkg && \
+        .\bootstrap-vcpkg.sh
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
