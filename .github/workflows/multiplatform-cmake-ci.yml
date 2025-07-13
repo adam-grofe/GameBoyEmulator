@@ -63,9 +63,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install ninja-build
-        sudo apt-get install pkg-config
-        sudo apt-get install libxkbcommon-x11-dev libxcb-cursor-dev
+        sudo apt-get install ninja-build pkg-config libxkbcommon-x11-dev libxcb-cursor-dev
 
     - name: Install Ninja (Windows)
       if: runner.os == 'Windows'
@@ -78,6 +76,11 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+    
+    - name: Check LongPathsEnabled
+      if: runner.os == 'Windows'
+      run: |
+           (Get-ItemProperty "HKLM:System\CurrentControlSet\Control\FileSystem").LongPathsEnabled
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
