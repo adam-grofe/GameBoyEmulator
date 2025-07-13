@@ -46,6 +46,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        path: ${{ github.workspace }}/GameBoyEmulator
+    - uses: actions/checkout@v4
+      with:
+        path: ${{ github.workspace }}/vcpkg
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -62,13 +67,13 @@ jobs:
     - name: Install VCPKG
       if: matrix.os == 'windows-latest'
       run:
-        cd ${HOME}/vcpkg && \
+        cd ${{ github.workspace }}/vcpkg && \
         .\bootstrap-vcpkg.bat
 
     - name: Install VCPKG
       if: matrix.os == 'ubuntu-latest'
       run:
-        cd ${HOME}/vcpkg && \
+        cd ${{ github.workspace }}/vcpkg && \
         .\bootstrap-vcpkg.sh
 
     - name: Configure CMake
@@ -76,12 +81,13 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         export VCPKG_ROOT=${HOME}/vcpkg && \
+        export PATH="${VCPKG_ROOT}:${PATH}"
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         --preset vcpkg
-        -S ${{ github.workspace }}
+        -S ${{ github.workspace }}/GameBoyEmulator
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
