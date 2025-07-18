@@ -51,7 +51,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        path: ${{ github.workspace }}/GameBoyEmulator
+        path: ${{ github.workspace }}
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
@@ -59,11 +59,9 @@ jobs:
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
         vcpkgGitCommitId: '0cf34c184ce990471435b5b9c92edcf7424930b1'
 
-    - name: Install system dependencies (Ubuntu)
-      if: runner.os == 'Linux'
+    - name: Install system dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install ninja-build pkg-config libxkbcommon-x11-dev libxcb-cursor-dev
+        vcpkg install ninja
 
     - name: Install Ninja (Windows)
       if: runner.os == 'Windows'
@@ -91,7 +89,7 @@ jobs:
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         --preset vcpkg-ci
-        -S ${{ github.workspace }}/GameBoyEmulator
+        -S ${{ github.workspace }}
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
