@@ -19,7 +19,18 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "FILEPATH", 
-          "value": "${sourceDir}/../vcpkg/scripts/buildsystems/vcpkg.cmake"
+          "value": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        }
+      }
+    },
+    {
+      "name": "vcpkg-docker",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH", 
+          "value": "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
         }
       }
     }
