@@ -13,16 +13,30 @@
       }
     },
     {
-      "name": "vcpkg-ci",
+      "name": "vcpkg-ci-1",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/b",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "FILEPATH", 
-          "value": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          "value": "C:\\Users\\User\\project\\GameBoyEmulator\\vcpkg/scripts/buildsystems/vcpkg.cmake"
         },
         "VCPKG_HOST_TRIPLET": "x64-windows-release",
         "VCPKG_TARGET_TRIPLET": "x64-windows-release"
+      }
+    },
+    {
+      "name": "vcpkg-ci-2",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/b",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH", 
+          "value": "H:\\vcpkg/scripts/buildsystems/vcpkg.cmake"
+        },
+        "VCPKG_HOST_TRIPLET": "x64-windows-release",
+        "VCPKG_TARGET_TRIPLET": "x64-windows-release",
+	"VCPKG_INSTALL_OPTIONS": "--x-buildtrees-root=d"
       }
     },
     {
