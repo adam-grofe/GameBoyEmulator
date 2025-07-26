@@ -8,8 +8,9 @@ set(CMAKE_AUTORCC ON)
 
 enable_testing()
 
+include(GNUInstallDirs)
 find_package(GTest REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml)
 
 qt_standard_project_setup(REQUIRES 6.5)
 qt_add_executable(EmulatorTarget src/main.cpp)
@@ -32,7 +33,7 @@ target_link_libraries(EmulatorTarget PUBLIC Qt6::Quick)
 qt_import_qml_plugins(EmulatorTarget)
 
 install(TARGETS EmulatorTarget 
-    BUNDLE  DESTINATION .
+    BUNDLE  DESTINATION AppBundleDir
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 

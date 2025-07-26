@@ -8,12 +8,12 @@
         "widgets"
       ]
     },
-    "qtdeclarative",
     {
       "name": "qttools",
       "features": [
         "qml"
       ]
-    }
+    },
+    "qtdeclarative"
   ]
 }

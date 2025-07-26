@@ -15,14 +15,15 @@
     {
       "name": "vcpkg-ci",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/b",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": {
           "type": "FILEPATH", 
-          "value": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          "value": "${sourceDir}/../vcpkg/scripts/buildsystems/vcpkg.cmake"
         },
         "VCPKG_HOST_TRIPLET": "x64-windows-release",
-        "VCPKG_TARGET_TRIPLET": "x64-windows-release"
+        "VCPKG_TARGET_TRIPLET": "x64-windows-release",
+	"CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
