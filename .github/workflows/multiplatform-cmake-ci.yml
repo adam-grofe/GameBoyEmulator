@@ -28,7 +28,6 @@ jobs:
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
         os: [windows-latest]
-        build_type: [Release]
         c_compiler: [cl]
         include:
           - os: windows-latest
@@ -37,20 +36,20 @@ jobs:
 
     steps:
     
-    - name: Copy Repo to Short Path
+    - name: Make Directory to Short Path
       if: runner.os == 'Windows'
       run: |
          mkdir C:\g
 
     - uses: actions/checkout@v4
       with:
-        path: C:\g\r
+        path: ${{ github.workspace }}/r
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgDirectory: 'C:\g\vcpkg'
-        vcpkgGitCommitId: '0cf34c184ce990471435b5b9c92edcf7424930b1'
+        vcpkgGitCommitId: 'ef7dbf94b9198bc58f45951adcf1f041fcbc5ea0'
 
     - name: Install Ninja (Windows)
       if: runner.os == 'Windows'
@@ -75,10 +74,9 @@ jobs:
       run: >
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         --preset vcpkg-ci
-        -S C:\g\r
+        -S ${{ github.workspace }}/r
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build C:\g\r\b --config ${{ matrix.build_type }}
+      run: cmake --build C:\g\b 
