@@ -36,14 +36,20 @@ jobs:
             cpp_compiler: cl
 
     steps:
+    
+    - name: Copy Repo to Short Path
+      if: runner.os == 'Windows'
+      run: |
+         mkdir C:\g
+
     - uses: actions/checkout@v4
       with:
-        path: ${{ github.workspace }}
+        path: C:\g\r
 
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgDirectory: 'C:\g\vcpkg'
         vcpkgGitCommitId: '0cf34c184ce990471435b5b9c92edcf7424930b1'
 
     - name: Install Ninja (Windows)
@@ -62,23 +68,17 @@ jobs:
       if: runner.os == 'Windows'
       run: |
            (Get-ItemProperty "HKLM:System\CurrentControlSet\Control\FileSystem").LongPathsEnabled
-    
-    - name: Use Subst to shorten paths
-      if: runner.os == 'Windows'
-      run: |
-         subst H: ${{ github.workspace }}
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
-        cmake -B H:\build
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         --preset vcpkg-ci
-        -S H:\
+        -S C:\g\r
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build H:\build --config ${{ matrix.build_type }}
+      run: cmake --build C:\g\r\b --config ${{ matrix.build_type }}
