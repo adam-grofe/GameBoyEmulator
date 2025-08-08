@@ -84,3 +84,9 @@ jobs:
       run: |
         & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\Launch-VsDevShell.ps1" -Arch amd64
         cmake --build ${{ github.workspace }}/r/b
+
+    - name: Install
+      # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: |
+        & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\Launch-VsDevShell.ps1" -Arch amd64
+        cmake --install ${{ github.workspace }}/r/b --prefix ${{ github.workspace }}/r/b/install-prefix
