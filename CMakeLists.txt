@@ -46,7 +46,8 @@ endif()
 install(TARGETS EmulatorTarget
     BUNDLE  DESTINATION AppBundleDir
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    RUNTIME_DEPENDENCY_SET
+)
+install(RUNTIME_DEPENDENCY_SET
         # Skip Windows system DLLs
         PRE_EXCLUDE_REGEXES
             "api-ms-win-.*" "ext-ms-.*" ".*[Ww]indows[/\\]System32.*"
