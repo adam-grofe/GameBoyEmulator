@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.24)
 
 project(GameBoyEmulator)
 
@@ -9,6 +9,8 @@ set(CMAKE_AUTORCC ON)
 enable_testing()
 
 include(GNUInstallDirs)
+include(InstallRequiredSystemLibraries) # MSVC runtime DLLs
+
 find_package(GTest REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml)
 
@@ -32,16 +34,40 @@ target_link_libraries(EmulatorTarget PUBLIC Qt6::Quick)
 
 qt_import_qml_plugins(EmulatorTarget)
 
-install(TARGETS EmulatorTarget 
+# Where to search for dependent DLLs when copying them
+set(_runtime_dep_dirs "")
+if(DEFINED VCPKG_INSTALLED_DIR AND DEFINED VCPKG_TARGET_TRIPLET)
+    list(APPEND _runtime_dep_dirs
+        "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/bin"
+        "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
+endif()
+
+# Install the app and copy its non-system runtime DLLs next to the exe
+install(TARGETS EmulatorTarget
     BUNDLE  DESTINATION AppBundleDir
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME_DEPENDENCIES
+        # Skip Windows system DLLs
+        PRE_EXCLUDE_REGEXES
+            "api-ms-win-.*" "ext-ms-.*" ".*[Ww]indows[/\\]System32.*"
+        # Where to look for dependent DLLs (vcpkg, etc.)
+        DIRECTORIES
+            ${_runtime_dep_dirs}
 )
+
+# Install the MSVC runtime (if available)
+if(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS)
+    install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
+        DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
 
 qt_generate_deploy_qml_app_script(
     TARGET  EmulatorTarget
     OUTPUT_SCRIPT deploy_script
 )
 install(SCRIPT ${deploy_script})
+
+include(CPack)
 
 #add_subdirectory(src)
 #add_subdirectory(tests)
