@@ -47,22 +47,6 @@ install(TARGETS EmulatorTarget
     BUNDLE  DESTINATION AppBundleDir
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-install(RUNTIME_DEPENDENCY_SET
-        # Skip Windows system DLLs
-        PRE_EXCLUDE_REGEXES
-            "api-ms-win-.*" "ext-ms-.*" ".*[Ww]indows[/\\]System32.*"
-        # Where to look for dependent DLLs (vcpkg, etc.)
-        DIRECTORIES
-            ${_runtime_dep_dirs}
-)
-# Install non-system runtime dependencies next to the exe
-install(RUNTIME_DEPENDENCIES
-  SET EmulatorTarget_deps
-  PRE_EXCLUDE_REGEXES
-    "api-ms-win-.*" "ext-ms-.*" ".*[Ww]indows[/\\]System32.*"
-  DIRECTORIES ${_runtime_dep_dirs}
-  DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
 
 # Install the MSVC runtime (if available)
 if(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS)
