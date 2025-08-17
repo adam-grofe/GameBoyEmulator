@@ -32,31 +32,22 @@ set_target_properties(EmulatorTarget PROPERTIES
 
 target_link_libraries(EmulatorTarget PUBLIC Qt6::Quick)
 
-qt_import_qml_plugins(EmulatorTarget)
-
-# Where to search for dependent DLLs when copying them
-set(_runtime_dep_dirs "")
-if(DEFINED VCPKG_INSTALLED_DIR AND DEFINED VCPKG_TARGET_TRIPLET)
-    list(APPEND _runtime_dep_dirs
-        "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/bin"
-        "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
-endif()
-
 # Install the app and copy its non-system runtime DLLs next to the exe
 install(TARGETS EmulatorTarget
-    BUNDLE  DESTINATION AppBundleDir
+    BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# Install the MSVC runtime (if available)
-if(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS)
-    install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
-        DESTINATION ${CMAKE_INSTALL_BINDIR})
+set(DEPLOY_OPTIONS "")
+if( CMAKE_BUILD_TYPE STREQUAL "Debug" )
+    set(DEPLOY_OPTIONS --debug)
 endif()
 
 qt_generate_deploy_qml_app_script(
     TARGET  EmulatorTarget
     OUTPUT_SCRIPT deploy_script
+    NO_TRANSLATIONS
+    DEPLOY_TOOL_OPTIONS ${DEPLOY_OPTIONS}
 )
 install(SCRIPT ${deploy_script})
 
