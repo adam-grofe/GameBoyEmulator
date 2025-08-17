@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.24)
 
 project(GameBoyEmulator)
 
@@ -9,6 +9,8 @@ set(CMAKE_AUTORCC ON)
 enable_testing()
 
 include(GNUInstallDirs)
+include(InstallRequiredSystemLibraries) # MSVC runtime DLLs
+
 find_package(GTest REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml)
 
@@ -30,18 +32,20 @@ set_target_properties(EmulatorTarget PROPERTIES
 
 target_link_libraries(EmulatorTarget PUBLIC Qt6::Quick)
 
-qt_import_qml_plugins(EmulatorTarget)
-
-install(TARGETS EmulatorTarget 
-    BUNDLE  DESTINATION AppBundleDir
+# Install the app and copy its non-system runtime DLLs next to the exe
+install(TARGETS EmulatorTarget
+    BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 qt_generate_deploy_qml_app_script(
     TARGET  EmulatorTarget
     OUTPUT_SCRIPT deploy_script
+    NO_TRANSLATIONS
 )
 install(SCRIPT ${deploy_script})
+
+include(CPack)
 
 #add_subdirectory(src)
 #add_subdirectory(tests)
