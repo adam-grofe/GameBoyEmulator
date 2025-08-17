@@ -117,7 +117,6 @@ jobs:
     
     - name: Copy Dependency DLLs
       run: |
-        ls ${{ github.workspace }}/r/b/vcpkg_installed
         cp ${{ github.workspace }}/r/b/vcpkg_installed/x64-windows-release/bin/*.dll ${{ github.workspace }}/r/b/install-prefix/bin
 
     - uses: actions/upload-artifact@v4
