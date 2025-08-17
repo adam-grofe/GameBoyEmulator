@@ -38,16 +38,10 @@ install(TARGETS EmulatorTarget
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-set(DEPLOY_OPTIONS "")
-if( CMAKE_BUILD_TYPE STREQUAL "Debug" )
-    set(DEPLOY_OPTIONS --debug)
-endif()
-
 qt_generate_deploy_qml_app_script(
     TARGET  EmulatorTarget
     OUTPUT_SCRIPT deploy_script
     NO_TRANSLATIONS
-    DEPLOY_TOOL_OPTIONS ${DEPLOY_OPTIONS}
 )
 install(SCRIPT ${deploy_script})
 
