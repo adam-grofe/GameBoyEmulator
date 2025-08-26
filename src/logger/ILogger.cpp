@@ -11,4 +11,6 @@ std::shared_ptr<Logger::ILogger> Logger::logger_factory(Logger::LoggerType logge
     case QtLogger:
         return std::make_shared<QtLogger>();
     }
+
+    return std::make_shared<QtLogger>();
 }
