@@ -15,7 +15,8 @@ find_package(GTest REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml)
 
 qt_standard_project_setup(REQUIRES 6.5)
-qt_add_executable(EmulatorTarget src/main.cpp)
+qt_add_executable(EmulatorTarget src/main.cpp src/logger/QtLogger.cpp src/logger/ILogger.cpp)
+target_include_directories(EmulatorTarget PUBLIC src)
 qt_policy(SET QTP0001 NEW)
 qt_policy(SET QTP0004 NEW)
 qt_add_qml_module(EmulatorTarget 

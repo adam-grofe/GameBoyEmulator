@@ -1,28 +1,31 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QDebug>
+#include <QString>
 #include <iostream>
+
+#include "logger/ILogger.hpp"
 
 int main(int argc, char *argv[])
 {
-    std::cout << "Pre\n";
+    auto logger = Logger::logger_factory(Logger::QtLogger);
+    logger->Debug("Pre");
 
     QGuiApplication app(argc, argv);
 
-    qDebug() << "Starting\n";
+    logger->Debug("Starting");
 
     QQmlApplicationEngine engine;
     const auto url = QUrl(QStringLiteral("qrc:/qt/qml/app/src/main.qml"));
-    qDebug() << "Loading QML from : " << url.toString() << "\n";
+    logger->Debug("Loading QML from : " + url.toString().toStdString());
     engine.load(url);
 
-    qDebug() << "QML Loaded\n";
+    logger->Debug("QML Loaded");
 
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    qDebug() << "App executing\n";
+    logger->Debug("App executing");
 
     return app.exec();
 }
