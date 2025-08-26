@@ -1,7 +1,7 @@
+#pragma once
 
 #include "logger/ILogger.hpp"
 
-#pragma once
 
 namespace Logger
 {

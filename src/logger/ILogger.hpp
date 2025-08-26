@@ -1,8 +1,8 @@
+#pragma once
 
 #include <string_view>
 #include <memory>
 
-#pragma once
 
 namespace Logger
 {

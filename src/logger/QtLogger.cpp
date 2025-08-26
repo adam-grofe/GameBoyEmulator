@@ -5,17 +5,17 @@
 
 
 void Logger::QtLogger::Debug(std::string_view s){
-    qDebug() << s;
+    qDebug() << QString::fromUtf8(s.data(), s.size());
 }
 
 void Logger::QtLogger::Info(std::string_view s) {
-    qInfo() << s;
+    qInfo() << QString::fromUtf8(s.data(), s.size());
 }
 
 void Logger::QtLogger::Warn(std::string_view s) {
-    qWarning() << s;
+    qWarning() << QString::fromUtf8(s.data(), s.size());
 }
 
 void Logger::QtLogger::Error(std::string_view s) {
-    qFatal() << s;
+    qCritical() << QString::fromUtf8(s.data(), s.size());
 }
