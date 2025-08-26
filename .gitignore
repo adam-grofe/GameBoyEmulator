@@ -33,5 +33,7 @@
 
 build*
 b/*
+.vscode/*
+.vs/*
 
 CMakeUserPresets.json
