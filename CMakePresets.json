@@ -1,41 +1,41 @@
 {
-  "version": 3,
-  "configurePresets": [
-    {
-      "name": "vcpkg",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "FILEPATH",
-          "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-        }
-      }
-    },
-    {
-      "name": "vcpkg-ci",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/b",
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "FILEPATH", 
-          "value": "C:/g/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "vcpkg",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "type": "FILEPATH",
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+                }
+            }
         },
-        "VCPKG_HOST_TRIPLET": "x64-windows-release",
-        "VCPKG_TARGET_TRIPLET": "x64-windows-release",
-	      "CMAKE_BUILD_TYPE": "Release"
-      }
-    },
-    {
-      "name": "vcpkg-docker",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": {
-          "type": "FILEPATH", 
-          "value": "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        {
+            "name": "vcpkg-ci",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/b",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "type": "FILEPATH",
+                    "value": "C:/g/vcpkg/scripts/buildsystems/vcpkg.cmake"
+                },
+                "VCPKG_HOST_TRIPLET": "x64-windows-release",
+                "VCPKG_TARGET_TRIPLET": "x64-windows-release",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "vcpkg-docker",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "type": "FILEPATH",
+                    "value": "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
+                }
+            }
         }
-      }
-    }
-  ]
+    ]
 }
