@@ -1,6 +1,6 @@
 #pragma once
 
-#include "logger/ILogger.hpp"
+#include "Logger/ILogger.hpp"
 
 namespace Logger
 {

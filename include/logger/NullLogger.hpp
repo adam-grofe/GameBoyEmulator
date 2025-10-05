@@ -1,6 +1,6 @@
 #pragma once
 
-#include "logger/ILogger.hpp"
+#include "Logger/ILogger.hpp"
 #include <queue>
 #include <string>
 #include <string_view>

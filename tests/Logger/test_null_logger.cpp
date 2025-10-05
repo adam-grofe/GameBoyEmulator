@@ -1,18 +1,27 @@
-#include "logger/NullLogger.hpp"
+#include "Logger/NullLogger.hpp"
 #include <gtest/gtest.h>
 
 using namespace Logger;
 
-TEST(NullLogger, DefaultLogger_StoresInfoAndBelow)
+class NullLoggerTests : public testing::Test
+{
+  protected:
+    void runMessages(NullLogger& log)
+    {
+        log.Debug("Debug");
+        log.Info("Info");
+        log.Warn("Warn");
+        log.Error("Error");
+    }
+};
+
+TEST_F(NullLoggerTests, DefaultLogger_StoresInfoAndBelow)
 {
     // Arrange
     auto log = NullLogger();
 
     // Act
-    log.Debug("Debug");
-    log.Info("Info");
-    log.Warn("Warn");
-    log.Error("Error");
+    runMessages(log);
     auto result = log.Messages();
 
     // Assert
@@ -21,16 +30,13 @@ TEST(NullLogger, DefaultLogger_StoresInfoAndBelow)
     ASSERT_EQ(result[2], "[Error]  Error");
 }
 
-TEST(NullLogger, DebugLogger_StoresAllMessages)
+TEST_F(NullLoggerTests, DebugLogger_StoresAllMessages)
 {
     // Arrange
     auto log = NullLogger(NullLogger::LogLevel::Debug);
 
     // Act
-    log.Debug("Debug");
-    log.Info("Info");
-    log.Warn("Warn");
-    log.Error("Error");
+    runMessages(log);
     auto result = log.Messages();
 
     // Assert
@@ -40,16 +46,13 @@ TEST(NullLogger, DebugLogger_StoresAllMessages)
     ASSERT_EQ(result[3], "[Error]  Error");
 }
 
-TEST(NullLogger, InfoLogger_StoresAllMessages)
+TEST_F(NullLoggerTests, InfoLogger_StoresAllMessages)
 {
     // Arrange
     auto log = NullLogger(NullLogger::LogLevel::Info);
 
     // Act
-    log.Debug("Debug");
-    log.Info("Info");
-    log.Warn("Warn");
-    log.Error("Error");
+    runMessages(log);
     auto result = log.Messages();
 
     // Assert
@@ -58,16 +61,13 @@ TEST(NullLogger, InfoLogger_StoresAllMessages)
     ASSERT_EQ(result[2], "[Error]  Error");
 }
 
-TEST(NullLogger, WarnLogger_StoresWarnOrBelowMessages)
+TEST_F(NullLoggerTests, WarnLogger_StoresWarnOrBelowMessages)
 {
     // Arrange
     auto log = NullLogger(NullLogger::LogLevel::Warn);
 
     // Act
-    log.Debug("Debug");
-    log.Info("Info");
-    log.Warn("Warn");
-    log.Error("Error");
+    runMessages(log);
     auto result = log.Messages();
 
     // Assert
@@ -75,32 +75,26 @@ TEST(NullLogger, WarnLogger_StoresWarnOrBelowMessages)
     ASSERT_EQ(result[1], "[Error]  Error");
 }
 
-TEST(NullLogger, ErrorLogger_StoresErrorMessages)
+TEST_F(NullLoggerTests, ErrorLogger_StoresErrorMessages)
 {
     // Arrange
     auto log = NullLogger(NullLogger::LogLevel::Error);
 
     // Act
-    log.Debug("Debug");
-    log.Info("Info");
-    log.Warn("Warn");
-    log.Error("Error");
+    runMessages(log);
     auto result = log.Messages();
 
     // Assert
     ASSERT_EQ(result[0], "[Error]  Error");
 }
 
-TEST(NullLogger, WarnLogger2Messages_StoresTwoMessages)
+TEST_F(NullLoggerTests, WarnLogger2Messages_StoresTwoMessages)
 {
     // Arrange
     auto log = NullLogger(NullLogger::LogLevel::Debug, 2);
 
     // Act
-    log.Debug("Debug");
-    log.Info("Info");
-    log.Warn("Warn");
-    log.Error("Error");
+    runMessages(log);
     auto result = log.Messages();
 
     // Assert
