@@ -36,6 +36,23 @@
                     "value": "/opt/vcpkg/scripts/buildsystems/vcpkg.cmake"
                 }
             }
+        },
+        {
+            "hidden": true,
+            "name": "Qt",
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "$env{QTDIR}"
+            },
+            "vendor": {
+                "qt-project.org/Qt": {
+                    "checksum": "wVa86FgEkvdCTVp1/nxvrkaemJc="
+                }
+            }
         }
-    ]
+    ],
+    "vendor": {
+        "qt-project.org/Presets": {
+            "checksum": "JB9A6N04CH1BU95vz8hDJfB0KlM="
+        }
+    }
 }

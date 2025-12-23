@@ -3,6 +3,9 @@
 
 using namespace Logger;
 
+namespace LoggerTests
+{
+
 class NullLoggerTests : public testing::Test
 {
   protected:
@@ -101,3 +104,5 @@ TEST_F(NullLoggerTests, WarnLogger2Messages_StoresTwoMessages)
     ASSERT_EQ(result[0], "[Warn ]  Warn");
     ASSERT_EQ(result[1], "[Error]  Error");
 }
+
+} // namespace LoggerTests
