@@ -18,7 +18,7 @@ class ILogger
 
 enum LoggerType
 {
-    QtLogger
+    NullLogger
 };
 
 std::shared_ptr<ILogger> logger_factory(LoggerType loggerType);

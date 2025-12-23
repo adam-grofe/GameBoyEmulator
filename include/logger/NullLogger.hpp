@@ -8,7 +8,7 @@
 
 namespace Logger
 {
-class NullLogger : public ILogger
+class NullLoggerImpl : public ILogger
 {
   public:
     using MessageOutputType = std::vector<std::string>;
@@ -20,8 +20,8 @@ class NullLogger : public ILogger
         Error = 1
     };
 
-    NullLogger(LogLevel logLevel = LogLevel::Info, size_t nMessages = 10);
-    ~NullLogger() = default;
+    NullLoggerImpl(LogLevel logLevel = LogLevel::Info, size_t nMessages = 10);
+    ~NullLoggerImpl() = default;
     void Debug(std::string_view s) override;
     void Info(std::string_view s) override;
     void Warn(std::string_view s) override;

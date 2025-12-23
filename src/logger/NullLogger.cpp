@@ -1,45 +1,45 @@
 #include "logger/NullLogger.hpp"
 
-Logger::NullLogger::NullLogger(Logger::NullLogger::LogLevel logLevel, size_t nMessages)
+Logger::NullLoggerImpl::NullLoggerImpl(Logger::NullLoggerImpl::LogLevel logLevel, size_t nMessages)
 {
     _nMessages = nMessages;
     _messages = std::queue<std::string>();
     _logLevel = logLevel;
 }
 
-void Logger::NullLogger::Debug(std::string_view s)
+void Logger::NullLoggerImpl::Debug(std::string_view s)
 {
-    if (_logLevel >= Logger::NullLogger::LogLevel::Debug)
+    if (_logLevel >= Logger::NullLoggerImpl::LogLevel::Debug)
     {
-        _addMessage(s, Logger::NullLogger::LogLevel::Debug);
+        _addMessage(s, Logger::NullLoggerImpl::LogLevel::Debug);
     }
 }
 
-void Logger::NullLogger::Info(std::string_view s)
+void Logger::NullLoggerImpl::Info(std::string_view s)
 {
-    if (_logLevel >= Logger::NullLogger::LogLevel::Info)
+    if (_logLevel >= Logger::NullLoggerImpl::LogLevel::Info)
     {
-        _addMessage(s, Logger::NullLogger::LogLevel::Info);
+        _addMessage(s, Logger::NullLoggerImpl::LogLevel::Info);
     }
 }
 
-void Logger::NullLogger::Warn(std::string_view s)
+void Logger::NullLoggerImpl::Warn(std::string_view s)
 {
-    if (_logLevel >= Logger::NullLogger::LogLevel::Warn)
+    if (_logLevel >= Logger::NullLoggerImpl::LogLevel::Warn)
     {
-        _addMessage(s, Logger::NullLogger::LogLevel::Warn);
+        _addMessage(s, Logger::NullLoggerImpl::LogLevel::Warn);
     }
 }
 
-void Logger::NullLogger::Error(std::string_view s)
+void Logger::NullLoggerImpl::Error(std::string_view s)
 {
-    if (_logLevel >= Logger::NullLogger::LogLevel::Error)
+    if (_logLevel >= Logger::NullLoggerImpl::LogLevel::Error)
     {
-        _addMessage(s, Logger::NullLogger::LogLevel::Error);
+        _addMessage(s, Logger::NullLoggerImpl::LogLevel::Error);
     }
 }
 
-void Logger::NullLogger::_addMessage(std::string_view message, Logger::NullLogger::LogLevel logLevel)
+void Logger::NullLoggerImpl::_addMessage(std::string_view message, Logger::NullLoggerImpl::LogLevel logLevel)
 {
     std::string formattedMessage = _formatMessage(message, logLevel);
     if (_messages.size() < _nMessages)
@@ -53,7 +53,7 @@ void Logger::NullLogger::_addMessage(std::string_view message, Logger::NullLogge
     }
 }
 
-Logger::NullLogger::MessageOutputType Logger::NullLogger::Messages()
+Logger::NullLoggerImpl::MessageOutputType Logger::NullLoggerImpl::Messages()
 {
     std::vector<std::string> result;
     size_t N = _messages.size();
@@ -65,17 +65,17 @@ Logger::NullLogger::MessageOutputType Logger::NullLogger::Messages()
     return result;
 }
 
-std::string Logger::NullLogger::_formatMessage(std::string_view s, Logger::NullLogger::LogLevel logLevel)
+std::string Logger::NullLoggerImpl::_formatMessage(std::string_view s, Logger::NullLoggerImpl::LogLevel logLevel)
 {
     switch (logLevel)
     {
-    case Logger::NullLogger::LogLevel::Debug:
+    case Logger::NullLoggerImpl::LogLevel::Debug:
         return "[Debug]  " + std::string(s);
-    case Logger::NullLogger::LogLevel::Info:
+    case Logger::NullLoggerImpl::LogLevel::Info:
         return "[Info ]  " + std::string(s);
-    case Logger::NullLogger::LogLevel::Warn:
+    case Logger::NullLoggerImpl::LogLevel::Warn:
         return "[Warn ]  " + std::string(s);
-    case Logger::NullLogger::LogLevel::Error:
+    case Logger::NullLoggerImpl::LogLevel::Error:
         return "[Error]  " + std::string(s);
     default:
         throw std::runtime_error("Unhandled log level in _formatMessage");

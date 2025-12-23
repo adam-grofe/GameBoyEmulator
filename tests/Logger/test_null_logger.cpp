@@ -9,7 +9,7 @@ namespace LoggerTests
 class NullLoggerTests : public testing::Test
 {
   protected:
-    void runMessages(NullLogger& log)
+    void runMessages(NullLoggerImpl& log)
     {
         log.Debug("Debug");
         log.Info("Info");
@@ -21,7 +21,7 @@ class NullLoggerTests : public testing::Test
 TEST_F(NullLoggerTests, DefaultLogger_StoresInfoAndBelow)
 {
     // Arrange
-    auto log = NullLogger();
+    auto log = NullLoggerImpl();
 
     // Act
     runMessages(log);
@@ -36,7 +36,7 @@ TEST_F(NullLoggerTests, DefaultLogger_StoresInfoAndBelow)
 TEST_F(NullLoggerTests, DebugLogger_StoresAllMessages)
 {
     // Arrange
-    auto log = NullLogger(NullLogger::LogLevel::Debug);
+    auto log = NullLoggerImpl(NullLoggerImpl::LogLevel::Debug);
 
     // Act
     runMessages(log);
@@ -52,7 +52,7 @@ TEST_F(NullLoggerTests, DebugLogger_StoresAllMessages)
 TEST_F(NullLoggerTests, InfoLogger_StoresAllMessages)
 {
     // Arrange
-    auto log = NullLogger(NullLogger::LogLevel::Info);
+    auto log = NullLoggerImpl(NullLoggerImpl::LogLevel::Info);
 
     // Act
     runMessages(log);
@@ -67,7 +67,7 @@ TEST_F(NullLoggerTests, InfoLogger_StoresAllMessages)
 TEST_F(NullLoggerTests, WarnLogger_StoresWarnOrBelowMessages)
 {
     // Arrange
-    auto log = NullLogger(NullLogger::LogLevel::Warn);
+    auto log = NullLoggerImpl(NullLoggerImpl::LogLevel::Warn);
 
     // Act
     runMessages(log);
@@ -81,7 +81,7 @@ TEST_F(NullLoggerTests, WarnLogger_StoresWarnOrBelowMessages)
 TEST_F(NullLoggerTests, ErrorLogger_StoresErrorMessages)
 {
     // Arrange
-    auto log = NullLogger(NullLogger::LogLevel::Error);
+    auto log = NullLoggerImpl(NullLoggerImpl::LogLevel::Error);
 
     // Act
     runMessages(log);
@@ -94,7 +94,7 @@ TEST_F(NullLoggerTests, ErrorLogger_StoresErrorMessages)
 TEST_F(NullLoggerTests, WarnLogger2Messages_StoresTwoMessages)
 {
     // Arrange
-    auto log = NullLogger(NullLogger::LogLevel::Debug, 2);
+    auto log = NullLoggerImpl(NullLoggerImpl::LogLevel::Debug, 2);
 
     // Act
     runMessages(log);

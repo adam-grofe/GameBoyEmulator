@@ -12,39 +12,14 @@ include(GNUInstallDirs)
 include(InstallRequiredSystemLibraries) # MSVC runtime DLLs
 
 find_package(GTest REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml)
 
-qt_standard_project_setup(REQUIRES 6.5)
-qt_add_executable(EmulatorTarget ${CMAKE_SOURCE_DIR}/src/main.cpp)
-target_include_directories(EmulatorTarget PUBLIC ${CMAKE_SOURCE_DIR}/include)
-qt_policy(SET QTP0001 NEW)
-qt_policy(SET QTP0004 NEW)
-qt_add_qml_module(EmulatorTarget 
-    URI app
-    VERSION 1.0
-    RESOURCE_PREFIX "/qt/qml"
-    QML_FILES 
-        src/main.qml
-)
-
-set_target_properties(EmulatorTarget PROPERTIES
-    WIN32_EXECUTABLE FALSE
-)
-
-target_link_libraries(EmulatorTarget PUBLIC Qt6::Quick)
+add_executable(EmulatorTarget ${CMAKE_SOURCE_DIR}/src/main.cpp)
 
 # Install the app and copy its non-system runtime DLLs next to the exe
 install(TARGETS EmulatorTarget
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-
-qt_generate_deploy_qml_app_script(
-    TARGET  EmulatorTarget
-    OUTPUT_SCRIPT deploy_script
-    NO_TRANSLATIONS
-)
-install(SCRIPT ${deploy_script})
 
 include(CPack)
 

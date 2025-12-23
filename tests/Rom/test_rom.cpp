@@ -17,7 +17,7 @@ class RomTests : public testing::Test
     GBEmulator::Rom getRom()
     {
         std::string path = romPath();
-        auto logger = std::make_shared<Logger::NullLogger>();
+        auto logger = std::make_shared<Logger::NullLoggerImpl>();
 
         return GBEmulator::Rom{path, logger};
     }
