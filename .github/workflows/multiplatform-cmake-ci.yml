@@ -14,8 +14,8 @@ permissions:
 
 env: 
   USERNAME: adam-grofe
-  VCPKG_ROOT: "{{ github.workspace }}/vcpkg"
-  VCPKG_EXE: "{{ github.workspace }}/vcpkg.exe"
+  VCPKG_ROOT: "./vcpkg"
+  VCPKG_EXE: "./vcpkg.exe"
   FEED_URL: https://nuget.pkg.github.com/adam-grofe/index.json
   VCPKG_BINARY_SOURCES: "clear;nuget,https://nuget.pkg.github.com/adam-grofe/index.json,readwrite"
 
