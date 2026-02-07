@@ -99,7 +99,7 @@ jobs:
       shell: bash
       if: runner.os == 'Linux'
       run: |
-        export PATH="$PATH:${VCPKG_ROOT}" && \
+        export PATH="${PATH}:${VCPKG_ROOT}" && \
         $(vcpkg fetch nuget) sources add \
           -Source "${{ env.FEED_URL }}" \
           -StorePasswordInClearText \
