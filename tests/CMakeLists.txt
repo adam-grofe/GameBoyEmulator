@@ -7,11 +7,13 @@ add_executable(EmulatorTests
 
 target_link_libraries(EmulatorTests 
     PRIVATE 
-        GTest::GTest 
-        GTest::Main
+        GTest::gtest 
+        GTest::gtest_main 
+        GTest::gmock 
+        GTest::gmock_main
         LoggerTarget
         RomTarget
 )
 target_include_directories( EmulatorTests PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-gtest_discover_tests(EmulatorTests)
+add_test(AllTestsInMain main)
