@@ -98,9 +98,8 @@ jobs:
     - name: Add NuGet sources (Linux)
       shell: bash
       if: runner.os == 'Linux'
-      env:
-        PATH: ${{ env.VCPKG_ROOT }}:$PATH
       run: |
+        export PATH="$PATH:${VCPKG_ROOT}" && \
         $(vcpkg fetch nuget) sources add \
           -Source "${{ env.FEED_URL }}" \
           -StorePasswordInClearText \
