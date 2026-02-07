@@ -99,6 +99,7 @@ jobs:
       shell: bash
       if: runner.os == 'Linux'
       run: |
+        set -xe && \
         export PATH="${PATH}:${VCPKG_ROOT}" && \
         $(vcpkg fetch nuget) sources add \
           -Source "${{ env.FEED_URL }}" \
