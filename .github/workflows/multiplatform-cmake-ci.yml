@@ -139,15 +139,14 @@ jobs:
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: |
         cmake --build ${{ github.workspace }}/r/b
+    
+    - name: Run Unit Tests
+      shell: pwsh
+      run: |
+          ctest --test-dir ${{ github.workspace }}/r/b --output-on-failure
 
     - name: Install
       shell: pwsh
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: |
         cmake --install ${{ github.workspace }}/r/b --prefix ${{ github.workspace }}/r/b/install-prefix
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: my-artifact
-        path: |
-          ${{ github.workspace }}/r/b/install-prefix
