@@ -85,7 +85,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         set -xe
-        NUGET_PATH = $(${{env.VCPKG_EXE }} fetch nuget)
+        NUGET_PATH=$(${{env.VCPKG_EXE }} fetch nuget)
         chmod +x $NUGET_PATH
 
     - name: Add NuGet sources
