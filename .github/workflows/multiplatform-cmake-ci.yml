@@ -80,18 +80,25 @@ jobs:
       run: |
            (Get-ItemProperty "HKLM:System\CurrentControlSet\Control\FileSystem").LongPathsEnabled
 
-    - name: Add NuGet sources (Windows)
+    - name: Setup NuGet
       shell: pwsh
-      if: runner.os == 'Windows'
+      if: runner.os == 'Linux'
       run: |
-        .$(${{ env.VCPKG_EXE }} fetch nuget) `
+        $nugetPath = ${{env.VCPKG_EXE }} fetch nuget
+        chmod +x $nugetPath
+
+    - name: Add NuGet sources
+      shell: pwsh
+      run: |
+        $nugetPath = ${{env.VCPKG_EXE }} fetch nuget
+        .$($nugetPath) `
           sources add `
           -Source "${{ env.FEED_URL }}" `
           -StorePasswordInClearText `
           -Name GitHubPackages `
           -UserName "${{ env.USERNAME }}" `
           -Password "${{ secrets.GH_PACKAGES_TOKEN }}"
-        .$(${{ env.VCPKG_EXE }} fetch nuget) `
+        .$($nugetPath) `
           setapikey "${{ secrets.GH_PACKAGES_TOKEN }}" `
           -Source "${{ env.FEED_URL }}"
 
