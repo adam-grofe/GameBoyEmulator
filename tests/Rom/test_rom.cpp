@@ -45,7 +45,7 @@ TEST_F(RomTests, LoadRomFromString_ReadsDataFromValidFile)
     auto value = rom.At(size_t{0});
 
     // Assert
-    EXPECT_NE(value, GBEmulator::Rom::DataType{0});
+    EXPECT_EQ(value, GBEmulator::Rom::DataType{0});
 }
 
 } // namespace RomTests

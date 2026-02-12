@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include "logger/ILogger.hpp"
+#include "Logger/ILogger.hpp"
 
 int main(int argc, char* argv[])
 {

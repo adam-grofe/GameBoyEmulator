@@ -1,4 +1,4 @@
-#include "logger/NullLogger.hpp"
+#include "Logger/NullLogger.hpp"
 
 Logger::NullLoggerImpl::NullLoggerImpl(Logger::NullLoggerImpl::LogLevel logLevel, size_t nMessages)
 {
