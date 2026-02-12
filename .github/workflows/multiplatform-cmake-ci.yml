@@ -81,11 +81,12 @@ jobs:
            (Get-ItemProperty "HKLM:System\CurrentControlSet\Control\FileSystem").LongPathsEnabled
 
     - name: Setup NuGet
-      shell: pwsh
+      shell: bash
       if: runner.os == 'Linux'
       run: |
-        $nugetPath = (${{env.VCPKG_EXE }} fetch nuget)
-        chmod +x $nugetPath
+        set -xe
+        NUGET_PATH = $(${{env.VCPKG_EXE }} fetch nuget)
+        chmod +x $NUGET_PATH
 
     - name: Add NuGet sources
       shell: pwsh
