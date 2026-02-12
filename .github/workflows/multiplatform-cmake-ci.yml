@@ -84,13 +84,13 @@ jobs:
       shell: pwsh
       if: runner.os == 'Linux'
       run: |
-        $nugetPath = ${{env.VCPKG_EXE }} fetch nuget
+        $nugetPath = (${{env.VCPKG_EXE }} fetch nuget)
         chmod +x $nugetPath
 
     - name: Add NuGet sources
       shell: pwsh
       run: |
-        $nugetPath = ${{env.VCPKG_EXE }} fetch nuget
+        $nugetPath = (${{env.VCPKG_EXE }} fetch nuget)
         .$($nugetPath) `
           sources add `
           -Source "${{ env.FEED_URL }}" `
